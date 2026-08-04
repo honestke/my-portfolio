@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Download } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { contentAssetUrl } from "@/lib/supabase/storage";
+import { fetchGitHubRepos } from "@/lib/github";
 import type {
   Certificate,
   Education,
@@ -11,12 +12,15 @@ import type {
   WorkExperience,
 } from "@/lib/types";
 import { Navbar } from "@/components/Navbar";
-import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { ResearchPaperCard } from "@/components/ResearchPaperCard";
 import { CertificateWall } from "@/components/CertificateWall";
 import { SkillsSection } from "@/components/SkillsSection";
 import { Timeline, type TimelineEntry } from "@/components/Timeline";
 import { TrackedLink } from "@/components/TrackedLink";
+import { PortfolioStats, type PortfolioStat } from "@/components/PortfolioStats";
+import { AchievementBadges } from "@/components/AchievementBadges";
+import { TechUsageChart } from "@/components/TechUsageChart";
+import { FilterableProjects } from "@/components/FilterableProjects";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -34,6 +38,12 @@ function dateRange(start: string | null, end: string | null, isCurrent?: boolean
   return `${startLabel} – ${endLabel}`;
 }
 
+function computeYearsExperience(earliestStart: string | undefined) {
+  if (!earliestStart) return 0;
+  const elapsedMs = Date.now() - new Date(earliestStart).getTime();
+  return Math.max(0, Math.floor(elapsedMs / (365.25 * 24 * 60 * 60 * 1000)));
+}
+
 export default async function PortfolioPage() {
   const supabase = await createClient();
 
@@ -45,6 +55,7 @@ export default async function PortfolioPage() {
     { data: certificates },
     { data: papers },
     { data: resumes },
+    { data: settings },
   ] = await Promise.all([
     supabase.from("skills").select("*").eq("published", true).order("sort_order", { ascending: true }),
     supabase
@@ -78,7 +89,10 @@ export default async function PortfolioPage() {
       .eq("published", true)
       .order("sort_order", { ascending: true })
       .limit(1),
+    supabase.from("site_settings").select("github_username").eq("id", 1).single(),
   ]);
+
+  const repos = await fetchGitHubRepos(settings?.github_username);
 
   const mainProjects = ((projects ?? []) as Project[]).filter(
     (p) => p.category?.toLowerCase() !== "funzone",
@@ -103,6 +117,33 @@ export default async function PortfolioPage() {
 
   const defaultResume = resumes?.[0];
   const resumeUrl = defaultResume ? contentAssetUrl(defaultResume.file_path) : null;
+
+  const earliestStart = ((experience ?? []) as WorkExperience[])
+    .map((e) => e.start_date)
+    .filter((d): d is string => Boolean(d))
+    .sort()[0];
+  const yearsExperience = computeYearsExperience(earliestStart);
+
+  const stats: PortfolioStat[] = [
+    { label: "Projects", value: mainProjects.length, icon: "projects" },
+    { label: "Certifications", value: certificates?.length ?? 0, icon: "certificates" },
+    { label: "Research Papers", value: papers?.length ?? 0, icon: "papers" },
+    { label: "Skills", value: skills?.length ?? 0, icon: "skills" },
+    { label: "Years Experience", value: yearsExperience, suffix: "+", icon: "experience" },
+  ];
+
+  const techCounts = new Map<string, number>();
+  for (const project of mainProjects) {
+    for (const tech of project.technologies) {
+      techCounts.set(tech, (techCounts.get(tech) ?? 0) + 1);
+    }
+  }
+  const techUsage = Array.from(techCounts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([name, count]) => ({ name, count }));
+
+  const hasDashboardContent = stats.some((s) => s.value > 0);
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,6 +173,23 @@ export default async function PortfolioPage() {
             </TrackedLink>
           )}
         </div>
+
+        {hasDashboardContent && (
+          <section className="pt-10">
+            <PortfolioStats stats={stats} />
+            <div className="mt-4">
+              <AchievementBadges
+                counts={{
+                  projects: mainProjects.length,
+                  certificates: certificates?.length ?? 0,
+                  papers: papers?.length ?? 0,
+                  repos: repos.length,
+                  yearsExperience,
+                }}
+              />
+            </div>
+          </section>
+        )}
 
         {skills && skills.length > 0 && (
           <section className="pt-16">
@@ -169,9 +227,20 @@ export default async function PortfolioPage() {
               <p className="text-sm text-neutral-500">Projects coming soon.</p>
             </div>
           ) : (
-            <ProjectsGrid projects={mainProjects} />
+            <FilterableProjects projects={mainProjects} />
           )}
         </section>
+
+        {techUsage.length > 0 && (
+          <section className="pt-16">
+            <h2 className="font-display mb-8 text-2xl font-semibold text-neutral-900 dark:text-white">
+              Technology Usage
+            </h2>
+            <div className="glass-panel rounded-2xl p-6">
+              <TechUsageChart data={techUsage} />
+            </div>
+          </section>
+        )}
 
         {certificates && certificates.length > 0 && (
           <section className="pt-16">
