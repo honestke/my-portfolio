@@ -115,7 +115,7 @@ export function Hero() {
             View Portfolio
           </a>
           <a
-            href="#contact"
+            href="/contact"
             className="glass-panel rounded-full px-6 py-3 text-sm font-medium text-neutral-900 transition hover:scale-105 hover:border-emerald/40 dark:text-white"
           >
             Get in Touch

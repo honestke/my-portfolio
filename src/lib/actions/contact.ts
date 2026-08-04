@@ -10,7 +10,7 @@ export async function submitContactForm(formData: FormData) {
   const message = (formData.get("message") as string)?.trim();
 
   if (!name || !email || !message) {
-    redirect("/?contact=error#contact");
+    redirect("/contact?contact=error");
   }
 
   const supabase = await createClient();
@@ -19,8 +19,8 @@ export async function submitContactForm(formData: FormData) {
     .insert({ name, email, subject, message });
 
   if (error) {
-    redirect("/?contact=error#contact");
+    redirect("/contact?contact=error");
   }
 
-  redirect("/?contact=success#contact");
+  redirect("/contact?contact=success");
 }
