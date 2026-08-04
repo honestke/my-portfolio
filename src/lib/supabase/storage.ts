@@ -1,6 +1,14 @@
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 
-export function projectAssetUrl(path: string | null) {
+function publicAssetUrl(bucket: string, path: string | null) {
   if (!path) return null;
-  return `${SUPABASE_URL}/storage/v1/object/public/project-assets/${path}`;
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
+}
+
+export function projectAssetUrl(path: string | null) {
+  return publicAssetUrl("project-assets", path);
+}
+
+export function blogAssetUrl(path: string | null) {
+  return publicAssetUrl("blog-assets", path);
 }

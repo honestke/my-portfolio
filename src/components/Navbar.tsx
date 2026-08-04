@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
@@ -33,19 +35,19 @@ export function Navbar() {
             : "border border-transparent py-3.5"
         }`}
       >
-        <a href="#home" className="font-display text-sm font-semibold text-white">
+        <Link href="/" className="font-display text-sm font-semibold text-white">
           Honest<span className="text-emerald">.</span>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-6">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="text-sm text-neutral-300 transition hover:text-white"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
       </nav>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
+import "highlight.js/styles/github-dark.css";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
