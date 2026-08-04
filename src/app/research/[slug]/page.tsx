@@ -61,7 +61,7 @@ export default async function ResearchPaperPage({
 
       <article className="mx-auto max-w-3xl px-6 pb-24 pt-32">
         <Link
-          href="/#research"
+          href="/portfolio"
           className="inline-flex items-center gap-1.5 text-sm text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
         >
           <ArrowLeft size={14} />

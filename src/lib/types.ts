@@ -112,6 +112,47 @@ export type InteractionEvent = {
   created_at: string;
 };
 
+export type Skill = {
+  id: string;
+  name: string;
+  category: string | null;
+  proficiency: number;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type WorkExperience = {
+  id: string;
+  company: string;
+  role: string;
+  location: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  is_current: boolean;
+  description: string | null;
+  achievements: string[];
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Education = {
+  id: string;
+  institution: string;
+  degree: string;
+  field_of_study: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  description: string | null;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Project = {
   id: string;
   title: string;

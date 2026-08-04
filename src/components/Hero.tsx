@@ -57,10 +57,10 @@ export function Hero() {
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <a
-            href="#projects"
+            href="/portfolio"
             className="rounded-full bg-emerald px-6 py-3 text-sm font-medium text-black transition hover:brightness-110"
           >
-            View Projects
+            View Portfolio
           </a>
           <a
             href="#contact"
