@@ -16,9 +16,14 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  const { count: unreadCount } = await supabase
+    .from("contact_submissions")
+    .select("*", { count: "exact", head: true })
+    .eq("read", false);
+
   return (
     <div className="flex min-h-screen bg-neutral-900">
-      <Sidebar />
+      <Sidebar unreadCount={unreadCount ?? 0} />
       <main className="flex-1 overflow-y-auto p-8">{children}</main>
     </div>
   );

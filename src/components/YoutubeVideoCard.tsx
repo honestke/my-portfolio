@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Play, ExternalLink } from "lucide-react";
 import type { YoutubeVideo } from "@/lib/types";
 import { contentAssetUrl } from "@/lib/supabase/storage";
+import { trackEvent } from "@/lib/track-client";
 
 export function YoutubeVideoCard({ video }: { video: YoutubeVideo }) {
   const [playing, setPlaying] = useState(false);
@@ -63,6 +64,7 @@ export function YoutubeVideoCard({ video }: { video: YoutubeVideo }) {
           href={video.video_url}
           target="_blank"
           rel="noreferrer"
+          onClick={() => trackEvent("outbound_click", { target: video.video_url })}
           className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
         >
           <ExternalLink size={14} />

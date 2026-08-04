@@ -1,5 +1,8 @@
+"use client";
+
 import { Star, GitFork, ExternalLink } from "lucide-react";
 import type { GitHubRepo } from "@/lib/github";
+import { trackEvent } from "@/lib/track-client";
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -22,6 +25,7 @@ export function GitHubRepoCard({ repo }: { repo: GitHubRepo }) {
       href={repo.html_url}
       target="_blank"
       rel="noreferrer"
+      onClick={() => trackEvent("outbound_click", { target: repo.html_url })}
       className="glass-panel group flex flex-col rounded-xl p-5 transition hover:border-emerald/30"
     >
       <div className="flex items-center justify-between">

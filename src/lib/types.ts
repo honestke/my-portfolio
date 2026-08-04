@@ -88,6 +88,30 @@ export type SiteSettings = {
   updated_at: string;
 };
 
+export type ContactSubmission = {
+  id: string;
+  name: string;
+  email: string;
+  subject: string | null;
+  message: string;
+  read: boolean;
+  created_at: string;
+};
+
+export type InteractionEventKind = "pageview" | "download" | "outbound_click";
+
+export type InteractionEvent = {
+  id: string;
+  kind: InteractionEventKind;
+  path: string | null;
+  target: string | null;
+  referrer: string | null;
+  country: string | null;
+  device: string | null;
+  browser: string | null;
+  created_at: string;
+};
+
 export type Project = {
   id: string;
   title: string;

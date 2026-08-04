@@ -6,6 +6,7 @@ import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { Download, ExternalLink, GitBranch } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { projectAssetUrl } from "@/lib/supabase/storage";
+import { trackEvent } from "@/lib/track-client";
 
 export function ProjectCard({ project }: { project: Project }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -106,6 +107,7 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.demo_url}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackEvent("outbound_click", { target: project.demo_url! })}
               className="inline-flex items-center gap-1.5 rounded-md bg-emerald px-3 py-1.5 text-xs font-medium text-black transition hover:brightness-110"
             >
               <ExternalLink size={14} />
@@ -117,6 +119,7 @@ export function ProjectCard({ project }: { project: Project }) {
               href={fileUrl}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackEvent("download", { target: project.title })}
               className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
             >
               <Download size={14} />
@@ -128,6 +131,7 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.github_url}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackEvent("outbound_click", { target: project.github_url! })}
               className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
             >
               <GitBranch size={14} />

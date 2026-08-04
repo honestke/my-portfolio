@@ -18,8 +18,15 @@ import { CertificateWall } from "@/components/CertificateWall";
 import { MasonryGallery } from "@/components/MasonryGallery";
 import { GitHubRepoCard } from "@/components/GitHubRepoCard";
 import { YoutubeVideoCard } from "@/components/YoutubeVideoCard";
+import { ContactForm } from "@/components/ContactForm";
+import { TrackedLink } from "@/components/TrackedLink";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ contact?: string }>;
+}) {
+  const { contact } = await searchParams;
   const supabase = await createClient();
 
   const [
@@ -192,14 +199,16 @@ export default async function Home() {
                       <Eye size={14} />
                       Preview
                     </a>
-                    <a
+                    <TrackedLink
                       href={url}
                       download
+                      eventKind="download"
+                      eventTarget={`Resume: ${resume.label}`}
                       className="inline-flex items-center gap-1.5 rounded-md bg-emerald px-3 py-1.5 text-xs font-medium text-black transition hover:brightness-110"
                     >
                       <Download size={14} />
                       Download
-                    </a>
+                    </TrackedLink>
                   </div>
                 </div>
               );
@@ -230,17 +239,21 @@ export default async function Home() {
             honestmbeheze@gmail.com
           </a>
           {settings?.linkedin_url && (
-            <a
+            <TrackedLink
               href={settings.linkedin_url}
               target="_blank"
               rel="noreferrer"
+              eventKind="outbound_click"
+              eventTarget={settings.linkedin_url}
               className="glass-panel inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-medium text-white transition hover:border-emerald/40"
             >
               <ExternalLink size={14} />
               LinkedIn
-            </a>
+            </TrackedLink>
           )}
         </div>
+
+        <ContactForm status={contact === "success" ? "success" : contact === "error" ? "error" : undefined} />
       </footer>
     </div>
   );
