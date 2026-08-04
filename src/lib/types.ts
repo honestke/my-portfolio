@@ -67,6 +67,27 @@ export type GalleryImage = {
   updated_at: string;
 };
 
+export type YoutubeVideo = {
+  id: string;
+  video_url: string;
+  video_id: string;
+  title: string | null;
+  description: string | null;
+  thumbnail_path: string | null;
+  published_at: string | null;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type SiteSettings = {
+  id: number;
+  github_username: string | null;
+  linkedin_url: string | null;
+  linkedin_summary: string | null;
+  updated_at: string;
+};
+
 export type Project = {
   id: string;
   title: string;

@@ -1,13 +1,23 @@
-import { Download, Eye } from "lucide-react";
+import { Download, Eye, ExternalLink } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { contentAssetUrl } from "@/lib/supabase/storage";
-import type { Certificate, GalleryImage, Project, ResearchPaper, Resume } from "@/lib/types";
+import { fetchGitHubRepos } from "@/lib/github";
+import type {
+  Certificate,
+  GalleryImage,
+  Project,
+  ResearchPaper,
+  Resume,
+  YoutubeVideo,
+} from "@/lib/types";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { ResearchPaperCard } from "@/components/ResearchPaperCard";
 import { CertificateWall } from "@/components/CertificateWall";
 import { MasonryGallery } from "@/components/MasonryGallery";
+import { GitHubRepoCard } from "@/components/GitHubRepoCard";
+import { YoutubeVideoCard } from "@/components/YoutubeVideoCard";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -18,6 +28,8 @@ export default async function Home() {
     { data: certificates },
     { data: galleryImages },
     { data: resumes },
+    { data: videos },
+    { data: settings },
   ] = await Promise.all([
     supabase
       .from("projects")
@@ -44,7 +56,15 @@ export default async function Home() {
       .select("*")
       .eq("published", true)
       .order("sort_order", { ascending: true }),
+    supabase
+      .from("youtube_videos")
+      .select("*")
+      .eq("published", true)
+      .order("published_at", { ascending: false, nullsFirst: false }),
+    supabase.from("site_settings").select("*").eq("id", 1).single(),
   ]);
+
+  const repos = await fetchGitHubRepos(settings?.github_username);
 
   return (
     <div className="min-h-screen bg-background">
@@ -67,6 +87,22 @@ export default async function Home() {
           <ProjectsGrid projects={projects as Project[]} />
         )}
       </section>
+
+      {repos.length > 0 && (
+        <section id="github" className="mx-auto max-w-6xl px-6 py-24">
+          <h2 className="font-display mb-2 text-sm font-semibold uppercase tracking-widest text-emerald">
+            Open Source
+          </h2>
+          <p className="mb-10 font-display text-3xl font-semibold text-white sm:text-4xl">
+            GitHub Repositories
+          </p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {repos.map((repo) => (
+              <GitHubRepoCard key={repo.id} repo={repo} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {papers && papers.length > 0 && (
         <section id="research" className="mx-auto max-w-6xl px-6 py-24">
@@ -105,6 +141,22 @@ export default async function Home() {
             Gallery
           </p>
           <MasonryGallery images={galleryImages as GalleryImage[]} />
+        </section>
+      )}
+
+      {videos && videos.length > 0 && (
+        <section id="videos" className="mx-auto max-w-6xl px-6 py-24">
+          <h2 className="font-display mb-2 text-sm font-semibold uppercase tracking-widest text-emerald">
+            Watch
+          </h2>
+          <p className="mb-10 font-display text-3xl font-semibold text-white sm:text-4xl">
+            Videos
+          </p>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {(videos as YoutubeVideo[]).map((video) => (
+              <YoutubeVideoCard key={video.id} video={video} />
+            ))}
+          </div>
         </section>
       )}
 
@@ -160,15 +212,35 @@ export default async function Home() {
         <p className="font-display text-2xl font-semibold text-white">
           Let&apos;s work together
         </p>
-        <p className="mx-auto mt-3 max-w-md text-sm text-neutral-400">
-          Reach out for collaborations, opportunities, or just to say hello.
-        </p>
-        <a
-          href="mailto:honestmbeheze@gmail.com"
-          className="mt-6 inline-block rounded-full bg-emerald px-6 py-3 text-sm font-medium text-black transition hover:brightness-110"
-        >
-          honestmbeheze@gmail.com
-        </a>
+        {settings?.linkedin_summary && (
+          <p className="mx-auto mt-3 max-w-md text-sm text-neutral-400">
+            {settings.linkedin_summary}
+          </p>
+        )}
+        {!settings?.linkedin_summary && (
+          <p className="mx-auto mt-3 max-w-md text-sm text-neutral-400">
+            Reach out for collaborations, opportunities, or just to say hello.
+          </p>
+        )}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="mailto:honestmbeheze@gmail.com"
+            className="inline-block rounded-full bg-emerald px-6 py-3 text-sm font-medium text-black transition hover:brightness-110"
+          >
+            honestmbeheze@gmail.com
+          </a>
+          {settings?.linkedin_url && (
+            <a
+              href={settings.linkedin_url}
+              target="_blank"
+              rel="noreferrer"
+              className="glass-panel inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-medium text-white transition hover:border-emerald/40"
+            >
+              <ExternalLink size={14} />
+              LinkedIn
+            </a>
+          )}
+        </div>
       </footer>
     </div>
   );
