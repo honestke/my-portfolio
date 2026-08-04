@@ -12,3 +12,7 @@ export function projectAssetUrl(path: string | null) {
 export function blogAssetUrl(path: string | null) {
   return publicAssetUrl("blog-assets", path);
 }
+
+export function contentAssetUrl(path: string | null) {
+  return publicAssetUrl("content-assets", path);
+}

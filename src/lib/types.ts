@@ -16,6 +16,57 @@ export type BlogPost = {
   updated_at: string;
 };
 
+export type Certificate = {
+  id: string;
+  title: string;
+  issuing_org: string | null;
+  issue_date: string | null;
+  credential_id: string | null;
+  credential_url: string | null;
+  file_path: string | null;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ResearchPaper = {
+  id: string;
+  title: string;
+  slug: string;
+  abstract: string | null;
+  authors: string | null;
+  publish_date: string | null;
+  keywords: string[];
+  pdf_path: string | null;
+  citation: string | null;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Resume = {
+  id: string;
+  label: string;
+  file_path: string;
+  is_default: boolean;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GalleryImage = {
+  id: string;
+  title: string | null;
+  description: string | null;
+  image_path: string;
+  category: string | null;
+  sort_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 export type Project = {
   id: string;
   title: string;
