@@ -21,7 +21,7 @@ export function ShareButtons({ title, url }: { title: string; url: string }) {
         href={xShareUrl}
         target="_blank"
         rel="noreferrer"
-        className="glass-panel flex h-9 w-9 items-center justify-center rounded-full text-neutral-300 transition hover:text-white"
+        className="glass-panel flex h-9 w-9 items-center justify-center rounded-full text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
         aria-label="Share on X"
       >
         <span className="text-sm font-semibold">X</span>
@@ -30,7 +30,7 @@ export function ShareButtons({ title, url }: { title: string; url: string }) {
         href={linkedinShareUrl}
         target="_blank"
         rel="noreferrer"
-        className="glass-panel flex h-9 w-9 items-center justify-center rounded-full text-neutral-300 transition hover:text-white"
+        className="glass-panel flex h-9 w-9 items-center justify-center rounded-full text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
         aria-label="Share on LinkedIn"
       >
         <span className="text-xs font-bold">in</span>
@@ -38,7 +38,7 @@ export function ShareButtons({ title, url }: { title: string; url: string }) {
       <button
         type="button"
         onClick={copyLink}
-        className="glass-panel flex h-9 w-9 items-center justify-center rounded-full text-neutral-300 transition hover:text-white"
+        className="glass-panel flex h-9 w-9 items-center justify-center rounded-full text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
         aria-label="Copy link"
       >
         {copied ? <Check size={16} className="text-emerald" /> : <Link2 size={16} />}

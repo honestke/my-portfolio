@@ -22,7 +22,7 @@ export function Hero() {
           className="relative"
         >
           <div className="absolute inset-0 -z-10 rounded-full bg-emerald/40 blur-2xl" />
-          <div className="glass-panel flex h-32 w-32 items-center justify-center rounded-full border-emerald/40 text-3xl font-display font-semibold text-white sm:h-36 sm:w-36">
+          <div className="glass-panel flex h-32 w-32 items-center justify-center rounded-full border-emerald/40 text-3xl font-display font-semibold text-neutral-900 dark:text-white sm:h-36 sm:w-36">
             HM
           </div>
         </motion.div>
@@ -32,7 +32,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-6xl">
+          <h1 className="font-display text-4xl font-bold tracking-tight text-neutral-900 dark:text-white sm:text-6xl">
             HONEST MBEHEZE
           </h1>
           <p className="mt-4 h-8 text-lg font-medium sm:text-2xl">
@@ -44,7 +44,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="max-w-xl text-neutral-400"
+          className="max-w-xl text-neutral-600 dark:text-neutral-400"
         >
           Building data-driven products and clean, thoughtful software —
           from dashboards to full-stack applications.
@@ -64,7 +64,7 @@ export function Hero() {
           </a>
           <a
             href="#contact"
-            className="glass-panel rounded-full px-6 py-3 text-sm font-medium text-white transition hover:border-emerald/40"
+            className="glass-panel rounded-full px-6 py-3 text-sm font-medium text-neutral-900 transition hover:border-emerald/40 dark:text-white"
           >
             Get in Touch
           </a>

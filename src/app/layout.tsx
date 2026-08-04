@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import { PageviewTracker } from "@/components/PageviewTracker";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -15,9 +16,28 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Honest Mbeheze",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Honest Mbeheze",
+    template: "%s | Honest Mbeheze",
+  },
   description: "Portfolio — Data Analyst & AI Integration Specialist",
+  openGraph: {
+    title: "Honest Mbeheze",
+    description: "Portfolio — Data Analyst & AI Integration Specialist",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Honest Mbeheze",
+    description: "Portfolio — Data Analyst & AI Integration Specialist",
+  },
 };
 
 export default function RootLayout({
@@ -28,11 +48,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <PageviewTracker />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <PageviewTracker />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

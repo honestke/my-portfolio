@@ -22,9 +22,9 @@ export default async function DashboardLayout({
     .eq("read", false);
 
   return (
-    <div className="flex min-h-screen bg-neutral-900">
+    <div className="flex min-h-screen flex-col bg-neutral-900 sm:flex-row">
       <Sidebar unreadCount={unreadCount ?? 0} />
-      <main className="flex-1 overflow-y-auto p-8">{children}</main>
+      <main className="flex-1 overflow-y-auto p-4 sm:p-8">{children}</main>
     </div>
   );
 }

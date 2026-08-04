@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { blogAssetUrl } from "@/lib/supabase/storage";
@@ -11,6 +12,35 @@ import { Navbar } from "@/components/Navbar";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { ShareButtons } from "@/components/ShareButtons";
 import { BlogPostCard } from "@/components/BlogPostCard";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+  const { data: post } = await supabase
+    .from("blog_posts")
+    .select("title, excerpt, featured_image_path")
+    .eq("slug", slug)
+    .single();
+
+  if (!post) return {};
+
+  const imageUrl = blogAssetUrl(post.featured_image_path);
+
+  return {
+    title: post.title,
+    description: post.excerpt ?? undefined,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt ?? undefined,
+      images: imageUrl ? [imageUrl] : undefined,
+      type: "article",
+    },
+  };
+}
 
 export default async function BlogPostPage({
   params,
@@ -85,7 +115,7 @@ export default async function BlogPostPage({
       <article className="mx-auto max-w-3xl px-6 pb-24 pt-32">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm text-neutral-400 transition hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
         >
           <ArrowLeft size={14} />
           Back to blog
@@ -99,7 +129,7 @@ export default async function BlogPostPage({
           <span>{estimateReadingMinutes(typedPost.content)} min read</span>
         </div>
 
-        <h1 className="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">
+        <h1 className="font-display mt-3 text-3xl font-bold text-neutral-900 dark:text-white sm:text-4xl">
           {typedPost.title}
         </h1>
 
@@ -118,12 +148,12 @@ export default async function BlogPostPage({
         </div>
 
         {typedPost.tags.length > 0 && (
-          <div className="mt-10 flex flex-wrap gap-2 border-t border-white/10 pt-6">
+          <div className="mt-10 flex flex-wrap gap-2 border-t border-black/10 pt-6 dark:border-white/10">
             {typedPost.tags.map((tag) => (
               <Link
                 key={tag}
                 href={`/blog?tag=${encodeURIComponent(tag)}`}
-                className="rounded-full border border-white/10 px-3 py-1 text-xs text-neutral-400 hover:text-white"
+                className="rounded-full border border-black/10 px-3 py-1 text-xs text-neutral-600 hover:text-neutral-900 dark:border-white/10 dark:text-neutral-400 dark:hover:text-white"
               >
                 #{tag}
               </Link>
@@ -131,7 +161,7 @@ export default async function BlogPostPage({
           </div>
         )}
 
-        <div className="mt-10 grid grid-cols-1 gap-4 border-t border-white/10 pt-6 sm:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-4 border-t border-black/10 pt-6 dark:border-white/10 sm:grid-cols-2">
           {prev ? (
             <Link
               href={`/blog/${prev.slug}`}
@@ -140,7 +170,7 @@ export default async function BlogPostPage({
               <p className="flex items-center gap-1.5 text-xs text-neutral-500">
                 <ArrowLeft size={12} /> Previous
               </p>
-              <p className="mt-1 text-sm text-white">{prev.title}</p>
+              <p className="mt-1 text-sm text-neutral-900 dark:text-white">{prev.title}</p>
             </Link>
           ) : (
             <div />
@@ -153,7 +183,7 @@ export default async function BlogPostPage({
               <p className="flex items-center justify-end gap-1.5 text-xs text-neutral-500">
                 Next <ArrowRight size={12} />
               </p>
-              <p className="mt-1 text-sm text-white">{next.title}</p>
+              <p className="mt-1 text-sm text-neutral-900 dark:text-white">{next.title}</p>
             </Link>
           ) : (
             <div />
@@ -161,8 +191,8 @@ export default async function BlogPostPage({
         </div>
 
         {related && related.length > 0 && (
-          <div className="mt-16 border-t border-white/10 pt-10">
-            <h2 className="font-display mb-6 text-xl font-semibold text-white">
+          <div className="mt-16 border-t border-black/10 pt-10 dark:border-white/10">
+            <h2 className="font-display mb-6 text-xl font-semibold text-neutral-900 dark:text-white">
               Related posts
             </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">

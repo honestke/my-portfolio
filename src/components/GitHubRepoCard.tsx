@@ -29,11 +29,11 @@ export function GitHubRepoCard({ repo }: { repo: GitHubRepo }) {
       className="glass-panel group flex flex-col rounded-xl p-5 transition hover:border-emerald/30"
     >
       <div className="flex items-center justify-between">
-        <h3 className="font-display truncate text-sm font-semibold text-white">{repo.name}</h3>
+        <h3 className="font-display truncate text-sm font-semibold text-neutral-900 dark:text-white">{repo.name}</h3>
         <ExternalLink size={14} className="shrink-0 text-neutral-500 group-hover:text-emerald" />
       </div>
 
-      <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs text-neutral-400">
+      <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs text-neutral-600 dark:text-neutral-400">
         {repo.description ?? "No description provided."}
       </p>
 
@@ -54,7 +54,7 @@ export function GitHubRepoCard({ repo }: { repo: GitHubRepo }) {
         </span>
       </div>
 
-      <p className="mt-3 text-[11px] text-neutral-600">
+      <p className="mt-3 text-[11px] text-neutral-500 dark:text-neutral-600">
         Updated {new Date(repo.updated_at).toLocaleDateString()}
       </p>
     </a>

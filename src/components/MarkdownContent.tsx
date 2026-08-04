@@ -15,7 +15,7 @@ export function MarkdownContent({ content }: { content: string }) {
           return (
             <div
               key={index}
-              className="prose prose-invert prose-headings:font-display max-w-none prose-a:text-emerald prose-img:rounded-xl"
+              className="prose prose-neutral dark:prose-invert prose-headings:font-display max-w-none prose-a:text-emerald prose-img:rounded-xl"
             >
               <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
                 {segment.value}
@@ -40,13 +40,13 @@ export function MarkdownContent({ content }: { content: string }) {
 
         if (segment.type === "pdf") {
           return (
-            <div key={index} className="overflow-hidden rounded-xl border border-white/10">
+            <div key={index} className="overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
               <iframe src={segment.url} title={segment.name} className="h-[600px] w-full" />
               <a
                 href={segment.url}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 border-t border-white/10 bg-white/5 px-4 py-3 text-sm text-neutral-300 transition hover:text-white"
+                className="flex items-center gap-2 border-t border-black/10 bg-black/5 px-4 py-3 text-sm text-neutral-700 transition hover:text-neutral-900 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300 dark:hover:text-white"
               >
                 <FileText size={16} />
                 {segment.name}
@@ -61,7 +61,7 @@ export function MarkdownContent({ content }: { content: string }) {
             href={segment.url}
             target="_blank"
             rel="noreferrer"
-            className="glass-panel flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-white transition hover:border-emerald/40"
+            className="glass-panel flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-neutral-900 transition hover:border-emerald/40 dark:text-white"
           >
             <Download size={16} className="text-emerald" />
             {segment.name}

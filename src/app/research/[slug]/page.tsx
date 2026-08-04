@@ -1,10 +1,32 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { ArrowLeft, Download } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { contentAssetUrl } from "@/lib/supabase/storage";
 import { Navbar } from "@/components/Navbar";
 import { CopyButton } from "@/components/CopyButton";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+  const { data: paper } = await supabase
+    .from("research_papers")
+    .select("title, abstract")
+    .eq("slug", slug)
+    .single();
+
+  if (!paper) return {};
+
+  return {
+    title: paper.title,
+    description: paper.abstract ?? undefined,
+  };
+}
 
 export default async function ResearchPaperPage({
   params,
@@ -40,7 +62,7 @@ export default async function ResearchPaperPage({
       <article className="mx-auto max-w-3xl px-6 pb-24 pt-32">
         <Link
           href="/#research"
-          className="inline-flex items-center gap-1.5 text-sm text-neutral-400 transition hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
         >
           <ArrowLeft size={14} />
           Back to portfolio
@@ -56,7 +78,7 @@ export default async function ResearchPaperPage({
           )}
         </div>
 
-        <h1 className="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">
+        <h1 className="font-display mt-3 text-3xl font-bold text-neutral-900 dark:text-white sm:text-4xl">
           {paper.title}
         </h1>
 
@@ -65,7 +87,7 @@ export default async function ResearchPaperPage({
             {paper.keywords.map((kw: string) => (
               <span
                 key={kw}
-                className="rounded-full border border-white/10 px-3 py-1 text-xs text-neutral-400"
+                className="rounded-full border border-black/10 px-3 py-1 text-xs text-neutral-600 dark:border-white/10 dark:text-neutral-400"
               >
                 {kw}
               </span>
@@ -78,7 +100,7 @@ export default async function ResearchPaperPage({
             <h2 className="font-display mb-2 text-sm font-semibold uppercase tracking-widest text-emerald">
               Abstract
             </h2>
-            <p className="text-sm leading-relaxed text-neutral-300">{paper.abstract}</p>
+            <p className="text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">{paper.abstract}</p>
           </div>
         )}
 
@@ -98,17 +120,17 @@ export default async function ResearchPaperPage({
         </div>
 
         {pdfUrl && (
-          <div className="mt-8 overflow-hidden rounded-xl border border-white/10">
+          <div className="mt-8 overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
             <iframe src={pdfUrl} title={paper.title} className="h-[700px] w-full" />
           </div>
         )}
 
         {paper.citation && (
-          <div className="mt-8 border-t border-white/10 pt-6">
+          <div className="mt-8 border-t border-black/10 pt-6 dark:border-white/10">
             <h2 className="font-display mb-2 text-sm font-semibold uppercase tracking-widest text-emerald">
               Citation
             </h2>
-            <p className="font-mono text-xs leading-relaxed text-neutral-400">{paper.citation}</p>
+            <p className="font-mono text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">{paper.citation}</p>
           </div>
         )}
       </article>

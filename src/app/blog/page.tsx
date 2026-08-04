@@ -40,8 +40,8 @@ export default async function BlogIndexPage({
       <Navbar />
 
       <div className="mx-auto max-w-5xl px-6 pb-24 pt-32">
-        <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl">Blog</h1>
-        <p className="mt-2 text-neutral-400">Writing on data, engineering, and everything between.</p>
+        <h1 className="font-display text-3xl font-semibold text-neutral-900 dark:text-white sm:text-4xl">Blog</h1>
+        <p className="mt-2 text-neutral-600 dark:text-neutral-400">Writing on data, engineering, and everything between.</p>
 
         <form className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center" action="/blog">
           <input
@@ -49,7 +49,7 @@ export default async function BlogIndexPage({
             name="q"
             defaultValue={q}
             placeholder="Search posts..."
-            className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-white outline-none focus:border-emerald sm:max-w-xs"
+            className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 outline-none focus:border-emerald dark:border-neutral-700 dark:bg-neutral-950 dark:text-white sm:max-w-xs"
           />
           <button
             type="submit"
@@ -68,7 +68,7 @@ export default async function BlogIndexPage({
                 className={`rounded-full border px-3 py-1 text-xs transition ${
                   category === c
                     ? "border-emerald bg-emerald/15 text-emerald"
-                    : "border-white/10 text-neutral-400 hover:text-white"
+                    : "border-black/10 text-neutral-600 hover:text-neutral-900 dark:border-white/10 dark:text-neutral-400 dark:hover:text-white"
                 }`}
               >
                 {c}
@@ -81,7 +81,7 @@ export default async function BlogIndexPage({
                 className={`rounded-full border px-3 py-1 text-xs transition ${
                   tag === t
                     ? "border-emerald bg-emerald/15 text-emerald"
-                    : "border-white/10 text-neutral-400 hover:text-white"
+                    : "border-black/10 text-neutral-600 hover:text-neutral-900 dark:border-white/10 dark:text-neutral-400 dark:hover:text-white"
                 }`}
               >
                 #{t}
@@ -90,7 +90,7 @@ export default async function BlogIndexPage({
             {(category || tag || q) && (
               <Link
                 href="/blog"
-                className="rounded-full border border-white/10 px-3 py-1 text-xs text-neutral-500 hover:text-white"
+                className="rounded-full border border-black/10 px-3 py-1 text-xs text-neutral-500 hover:text-neutral-900 dark:border-white/10 dark:hover:text-white"
               >
                 Clear filters
               </Link>

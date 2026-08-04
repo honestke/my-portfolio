@@ -31,14 +31,14 @@ export function CertificateWall({ certificates }: { certificates: Certificate[] 
               transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
               className="glass-panel group flex flex-col items-start overflow-hidden rounded-xl p-5 text-left transition hover:border-emerald/30"
             >
-              <div className="relative mb-4 flex h-32 w-full items-center justify-center overflow-hidden rounded-lg bg-black/30">
+              <div className="relative mb-4 flex h-32 w-full items-center justify-center overflow-hidden rounded-lg bg-neutral-100 dark:bg-black/30">
                 {fileUrl && isImage(cert.file_path) ? (
                   <Image src={fileUrl} alt={cert.title} fill className="object-contain p-3" />
                 ) : (
                   <Award className="text-emerald" size={36} />
                 )}
               </div>
-              <h3 className="font-display text-sm font-semibold text-white">{cert.title}</h3>
+              <h3 className="font-display text-sm font-semibold text-neutral-900 dark:text-white">{cert.title}</h3>
               {cert.issuing_org && (
                 <p className="mt-1 text-xs text-neutral-500">{cert.issuing_org}</p>
               )}
@@ -66,21 +66,21 @@ export function CertificateWall({ certificates }: { certificates: Certificate[] 
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                className="absolute right-4 top-4 text-neutral-400 hover:text-white"
+                className="absolute right-4 top-4 text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
                 aria-label="Close"
               >
                 <X size={20} />
               </button>
 
               {activeUrl && isImage(active.file_path) && (
-                <div className="relative mb-5 h-48 w-full overflow-hidden rounded-lg bg-black/30">
+                <div className="relative mb-5 h-48 w-full overflow-hidden rounded-lg bg-neutral-100 dark:bg-black/30">
                   <Image src={activeUrl} alt={active.title} fill className="object-contain" />
                 </div>
               )}
 
-              <h3 className="font-display text-xl font-semibold text-white">{active.title}</h3>
+              <h3 className="font-display text-xl font-semibold text-neutral-900 dark:text-white">{active.title}</h3>
               {active.issuing_org && (
-                <p className="mt-1 text-sm text-neutral-400">{active.issuing_org}</p>
+                <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{active.issuing_org}</p>
               )}
               {active.issue_date && (
                 <p className="mt-1 text-xs text-neutral-500">
@@ -110,7 +110,7 @@ export function CertificateWall({ certificates }: { certificates: Certificate[] 
                     href={activeUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-black/15 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-black/5 dark:border-white/15 dark:text-neutral-300 dark:hover:bg-white/5"
                   >
                     View File
                   </a>

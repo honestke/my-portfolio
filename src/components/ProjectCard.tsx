@@ -51,7 +51,7 @@ export function ProjectCard({ project }: { project: Project }) {
       style={{ rotateX, rotateY, transformPerspective: 800 }}
       className="glass-panel group flex flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-2xl hover:shadow-emerald/10"
     >
-      <div className="relative aspect-video w-full overflow-hidden bg-black/40">
+      <div className="relative aspect-video w-full overflow-hidden bg-neutral-100 dark:bg-black/40">
         {thumbnailUrl ? (
           <Image
             src={thumbnailUrl}
@@ -61,7 +61,7 @@ export function ProjectCard({ project }: { project: Project }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-neutral-600">
+          <div className="flex h-full w-full items-center justify-center text-sm text-neutral-400 dark:text-neutral-600">
             No thumbnail
           </div>
         )}
@@ -78,12 +78,12 @@ export function ProjectCard({ project }: { project: Project }) {
           {date && <span className="text-xs text-neutral-500">{date}</span>}
         </div>
 
-        <h3 className="font-display mt-3 text-lg font-semibold text-white">
+        <h3 className="font-display mt-3 text-lg font-semibold text-neutral-900 dark:text-white">
           {project.title}
         </h3>
 
         {project.description && (
-          <p className="mt-2 line-clamp-3 text-sm text-neutral-400">
+          <p className="mt-2 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400">
             {project.description}
           </p>
         )}
@@ -93,7 +93,7 @@ export function ProjectCard({ project }: { project: Project }) {
             {project.technologies.map((tech) => (
               <span
                 key={tech}
-                className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-neutral-300"
+                className="rounded-md border border-black/10 bg-black/5 px-2 py-0.5 text-xs text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
               >
                 {tech}
               </span>
@@ -120,7 +120,7 @@ export function ProjectCard({ project }: { project: Project }) {
               target="_blank"
               rel="noreferrer"
               onClick={() => trackEvent("download", { target: project.title })}
-              className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
+              className="inline-flex items-center gap-1.5 rounded-md border border-black/15 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-black/5 dark:border-white/15 dark:text-neutral-300 dark:hover:bg-white/5"
             >
               <Download size={14} />
               Download
@@ -132,7 +132,7 @@ export function ProjectCard({ project }: { project: Project }) {
               target="_blank"
               rel="noreferrer"
               onClick={() => trackEvent("outbound_click", { target: project.github_url! })}
-              className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
+              className="inline-flex items-center gap-1.5 rounded-md border border-black/15 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-black/5 dark:border-white/15 dark:text-neutral-300 dark:hover:bg-white/5"
             >
               <GitBranch size={14} />
               GitHub

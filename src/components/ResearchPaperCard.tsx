@@ -24,10 +24,10 @@ export function ResearchPaperCard({ paper }: { paper: ResearchPaper }) {
         )}
       </div>
 
-      <h3 className="font-display mt-3 text-lg font-semibold text-white">{paper.title}</h3>
+      <h3 className="font-display mt-3 text-lg font-semibold text-neutral-900 dark:text-white">{paper.title}</h3>
 
       {paper.abstract && (
-        <p className="mt-2 line-clamp-3 text-sm text-neutral-400">{paper.abstract}</p>
+        <p className="mt-2 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400">{paper.abstract}</p>
       )}
 
       {paper.keywords.length > 0 && (
@@ -35,7 +35,7 @@ export function ResearchPaperCard({ paper }: { paper: ResearchPaper }) {
           {paper.keywords.slice(0, 4).map((kw) => (
             <span
               key={kw}
-              className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-neutral-300"
+              className="rounded-md border border-black/10 bg-black/5 px-2 py-0.5 text-xs text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
             >
               {kw}
             </span>

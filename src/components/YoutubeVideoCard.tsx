@@ -54,18 +54,18 @@ export function YoutubeVideoCard({ video }: { video: YoutubeVideo }) {
 
       <div className="flex flex-1 flex-col p-5">
         {date && <span className="text-xs text-neutral-500">{date}</span>}
-        <h3 className="font-display mt-2 text-base font-semibold text-white">
+        <h3 className="font-display mt-2 text-base font-semibold text-neutral-900 dark:text-white">
           {video.title ?? "Untitled video"}
         </h3>
         {video.description && (
-          <p className="mt-2 line-clamp-2 text-sm text-neutral-400">{video.description}</p>
+          <p className="mt-2 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">{video.description}</p>
         )}
         <a
           href={video.video_url}
           target="_blank"
           rel="noreferrer"
           onClick={() => trackEvent("outbound_click", { target: video.video_url })}
-          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs font-medium text-neutral-300 transition hover:bg-white/5"
+          className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-md border border-black/15 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-black/5 dark:border-white/15 dark:text-neutral-300 dark:hover:bg-white/5"
         >
           <ExternalLink size={14} />
           Watch on YouTube

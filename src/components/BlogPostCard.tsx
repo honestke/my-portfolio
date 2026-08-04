@@ -19,7 +19,7 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="glass-panel group flex flex-col overflow-hidden rounded-2xl transition hover:border-emerald/30"
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-black/40">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100 dark:bg-black/40">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -29,7 +29,7 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-neutral-600">
+          <div className="flex h-full w-full items-center justify-center text-sm text-neutral-400 dark:text-neutral-600">
             No image
           </div>
         )}
@@ -44,10 +44,10 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
           <span>{estimateReadingMinutes(post.content)} min read</span>
         </div>
 
-        <h3 className="font-display mt-3 text-lg font-semibold text-white">{post.title}</h3>
+        <h3 className="font-display mt-3 text-lg font-semibold text-neutral-900 dark:text-white">{post.title}</h3>
 
         {post.excerpt && (
-          <p className="mt-2 line-clamp-3 text-sm text-neutral-400">{post.excerpt}</p>
+          <p className="mt-2 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400">{post.excerpt}</p>
         )}
 
         {post.tags.length > 0 && (
@@ -55,7 +55,7 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
             {post.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag}
-                className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-neutral-300"
+                className="rounded-md border border-black/10 bg-black/5 px-2 py-0.5 text-xs text-neutral-700 dark:border-white/10 dark:bg-white/5 dark:text-neutral-300"
               >
                 {tag}
               </span>
