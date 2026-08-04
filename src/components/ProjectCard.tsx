@@ -7,6 +7,7 @@ import { Download, ExternalLink, GitBranch } from "lucide-react";
 import type { Project } from "@/lib/types";
 import { projectAssetUrl } from "@/lib/supabase/storage";
 import { trackEvent } from "@/lib/track-client";
+import { getFileTypeInfo } from "@/lib/file-type";
 
 export function ProjectCard({ project }: { project: Project }) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -36,6 +37,7 @@ export function ProjectCard({ project }: { project: Project }) {
 
   const thumbnailUrl = projectAssetUrl(project.thumbnail_path);
   const fileUrl = projectAssetUrl(project.file_path);
+  const fileType = getFileTypeInfo(project.file_path);
   const date = project.project_date
     ? new Date(project.project_date).toLocaleDateString(undefined, {
         year: "numeric",
@@ -69,12 +71,22 @@ export function ProjectCard({ project }: { project: Project }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-center justify-between gap-2">
-          {project.category && (
-            <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-medium text-emerald">
-              {project.category}
-            </span>
-          )}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
+            {project.category && (
+              <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-medium text-emerald">
+                {project.category}
+              </span>
+            )}
+            {fileType && (
+              <span
+                className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+                style={{ backgroundColor: `${fileType.color}22`, color: fileType.color }}
+              >
+                {fileType.label}
+              </span>
+            )}
+          </div>
           {date && <span className="text-xs text-neutral-500">{date}</span>}
         </div>
 
@@ -123,7 +135,7 @@ export function ProjectCard({ project }: { project: Project }) {
               className="inline-flex items-center gap-1.5 rounded-md border border-black/15 px-3 py-1.5 text-xs font-medium text-neutral-700 transition hover:bg-black/5 dark:border-white/15 dark:text-neutral-300 dark:hover:bg-white/5"
             >
               <Download size={14} />
-              Download
+              {fileType ? `Download ${fileType.label}` : "Download"}
             </a>
           )}
           {project.github_url && (

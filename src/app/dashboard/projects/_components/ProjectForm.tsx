@@ -95,7 +95,10 @@ export function ProjectForm({ action, project, error, thumbnailUrl, fileUrl }: P
             <option value="Web App" />
             <option value="Data Analysis" />
             <option value="Mobile App" />
-            <option value="Excel / Power BI" />
+            <option value="Excel Dashboard" />
+            <option value="Power BI Report" />
+            <option value="Access Database" />
+            <option value="Research Document" />
           </datalist>
           <p className="mt-1 text-xs text-neutral-500">
             Tip: use &ldquo;Funzone&rdquo; for games, calculators, or other interactive items —
