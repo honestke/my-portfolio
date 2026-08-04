@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 
 const roles = [
+  "Full Stack Developer",
   "Data Analyst",
   "AI Integration Specialist",
-  "Statistics Enthusiast",
-  "Power BI Developer",
-  "Blockchain Researcher",
-  "Website Developer",
+  "Blockchain Developer",
+  "Researcher",
 ];
 
 const TYPING_SPEED = 65;

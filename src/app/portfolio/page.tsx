@@ -6,10 +6,12 @@ import { fetchGitHubRepos } from "@/lib/github";
 import type {
   Certificate,
   Education,
+  GalleryImage,
   Project,
   ResearchPaper,
   Skill,
   WorkExperience,
+  YoutubeVideo,
 } from "@/lib/types";
 import { Navbar } from "@/components/Navbar";
 import { ResearchPaperCard } from "@/components/ResearchPaperCard";
@@ -21,6 +23,8 @@ import { PortfolioStats, type PortfolioStat } from "@/components/PortfolioStats"
 import { AchievementBadges } from "@/components/AchievementBadges";
 import { TechUsageChart } from "@/components/TechUsageChart";
 import { FilterableProjects } from "@/components/FilterableProjects";
+import { MasonryGallery } from "@/components/MasonryGallery";
+import { YoutubeVideoCard } from "@/components/YoutubeVideoCard";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -56,6 +60,8 @@ export default async function PortfolioPage() {
     { data: papers },
     { data: resumes },
     { data: settings },
+    { data: galleryImages },
+    { data: videos },
   ] = await Promise.all([
     supabase.from("skills").select("*").eq("published", true).order("sort_order", { ascending: true }),
     supabase
@@ -90,6 +96,16 @@ export default async function PortfolioPage() {
       .order("sort_order", { ascending: true })
       .limit(1),
     supabase.from("site_settings").select("github_username").eq("id", 1).single(),
+    supabase
+      .from("gallery_images")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("youtube_videos")
+      .select("*")
+      .eq("published", true)
+      .order("published_at", { ascending: false, nullsFirst: false }),
   ]);
 
   const repos = await fetchGitHubRepos(settings?.github_username);
@@ -261,6 +277,28 @@ export default async function PortfolioPage() {
                 <ResearchPaperCard key={paper.id} paper={paper} />
               ))}
             </div>
+          </section>
+        )}
+
+        {videos && videos.length > 0 && (
+          <section className="pt-16">
+            <h2 className="font-display mb-8 text-2xl font-semibold text-neutral-900 dark:text-white">
+              Videos
+            </h2>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {(videos as YoutubeVideo[]).map((video) => (
+                <YoutubeVideoCard key={video.id} video={video} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {galleryImages && galleryImages.length > 0 && (
+          <section className="pt-16">
+            <h2 className="font-display mb-8 text-2xl font-semibold text-neutral-900 dark:text-white">
+              Gallery
+            </h2>
+            <MasonryGallery images={galleryImages as GalleryImage[]} />
           </section>
         )}
       </div>
