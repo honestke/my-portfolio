@@ -73,6 +73,10 @@ export default async function Home({
 
   const repos = await fetchGitHubRepos(settings?.github_username);
 
+  const allProjects = (projects ?? []) as Project[];
+  const mainProjects = allProjects.filter((p) => p.category?.toLowerCase() !== "funzone");
+  const funzoneProjects = allProjects.filter((p) => p.category?.toLowerCase() === "funzone");
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -100,14 +104,29 @@ export default async function Home({
           Projects
         </p>
 
-        {!projects || projects.length === 0 ? (
+        {mainProjects.length === 0 ? (
           <div className="glass-panel rounded-2xl p-12 text-center">
             <p className="text-sm text-neutral-500">Projects coming soon.</p>
           </div>
         ) : (
-          <ProjectsGrid projects={projects as Project[]} />
+          <ProjectsGrid projects={mainProjects} />
         )}
       </section>
+
+      {funzoneProjects.length > 0 && (
+        <section id="funzone" className="mx-auto max-w-6xl px-6 py-24">
+          <h2 className="font-display mb-2 text-sm font-semibold uppercase tracking-widest text-gold">
+            Just for Fun
+          </h2>
+          <p className="mb-10 font-display text-3xl font-semibold text-neutral-900 dark:text-white sm:text-4xl">
+            Funzone
+          </p>
+          <p className="-mt-8 mb-10 max-w-xl text-sm text-neutral-600 dark:text-neutral-400">
+            Games, calculators, dashboards, and other interactive things I&apos;ve built for fun.
+          </p>
+          <ProjectsGrid projects={funzoneProjects} />
+        </section>
+      )}
 
       {repos.length > 0 && (
         <section id="github" className="mx-auto max-w-6xl px-6 py-24">

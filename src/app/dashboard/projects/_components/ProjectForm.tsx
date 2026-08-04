@@ -85,10 +85,22 @@ export function ProjectForm({ action, project, error, thumbnailUrl, fileUrl }: P
             id="category"
             name="category"
             type="text"
+            list="category-suggestions"
             defaultValue={project?.category ?? ""}
             placeholder="Web App"
             className={inputClass}
           />
+          <datalist id="category-suggestions">
+            <option value="Funzone" />
+            <option value="Web App" />
+            <option value="Data Analysis" />
+            <option value="Mobile App" />
+            <option value="Excel / Power BI" />
+          </datalist>
+          <p className="mt-1 text-xs text-neutral-500">
+            Tip: use &ldquo;Funzone&rdquo; for games, calculators, or other interactive items —
+            they&apos;ll show up in their own section instead of Projects.
+          </p>
         </div>
         <div>
           <label htmlFor="project_date" className={labelClass}>
