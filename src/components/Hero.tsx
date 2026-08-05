@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { Code2, Database, Brain, Blocks, BarChart3 } from "lucide-react";
 import { TypingRoles } from "./TypingRoles";
-import { ParticleNetwork } from "./ParticleNetwork";
 import { MouseGlow } from "./MouseGlow";
 import { OrbitingIcons } from "./OrbitingIcons";
 
@@ -52,7 +51,6 @@ export function Hero() {
       onMouseLeave={handleMouseLeave}
       className="group/hero gradient-mesh-bg relative flex min-h-screen items-center overflow-hidden px-6"
     >
-      <ParticleNetwork />
       <MouseGlow />
 
       <div className="pointer-events-none absolute inset-0">

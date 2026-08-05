@@ -33,14 +33,13 @@ export function ParticleNetwork() {
     let animationFrame = 0;
 
     function resize() {
-      const parent = canvas!.parentElement;
-      if (!parent) return;
-      width = parent.clientWidth;
-      height = parent.clientHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
       canvas!.width = width * window.devicePixelRatio;
       canvas!.height = height * window.devicePixelRatio;
       canvas!.style.width = `${width}px`;
       canvas!.style.height = `${height}px`;
+      ctx!.setTransform(1, 0, 0, 1, 0, 0);
       ctx!.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
 
@@ -59,7 +58,7 @@ export function ParticleNetwork() {
 
     function draw() {
       ctx!.clearRect(0, 0, width, height);
-      const dotColor = isDark() ? "rgba(16, 185, 129, 0.6)" : "rgba(5, 150, 105, 0.5)";
+      const dotColor = isDark() ? "rgba(16, 185, 129, 0.5)" : "rgba(5, 150, 105, 0.4)";
       const lineColor = isDark() ? "16, 185, 129" : "5, 150, 105";
 
       for (const p of particles) {
@@ -83,7 +82,7 @@ export function ParticleNetwork() {
             ctx!.beginPath();
             ctx!.moveTo(a.x, a.y);
             ctx!.lineTo(b.x, b.y);
-            ctx!.strokeStyle = `rgba(${lineColor}, ${0.15 * (1 - dist / LINK_DISTANCE)})`;
+            ctx!.strokeStyle = `rgba(${lineColor}, ${0.12 * (1 - dist / LINK_DISTANCE)})`;
             ctx!.lineWidth = 1;
             ctx!.stroke();
           }
@@ -94,7 +93,7 @@ export function ParticleNetwork() {
           ctx!.beginPath();
           ctx!.moveTo(a.x, a.y);
           ctx!.lineTo(mouse.x, mouse.y);
-          ctx!.strokeStyle = `rgba(${lineColor}, ${0.35 * (1 - mDist / MOUSE_LINK_DISTANCE)})`;
+          ctx!.strokeStyle = `rgba(${lineColor}, ${0.3 * (1 - mDist / MOUSE_LINK_DISTANCE)})`;
           ctx!.lineWidth = 1;
           ctx!.stroke();
         }
@@ -104,8 +103,7 @@ export function ParticleNetwork() {
     }
 
     function handleMouseMove(e: MouseEvent) {
-      const rect = canvas!.getBoundingClientRect();
-      mouse = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      mouse = { x: e.clientX, y: e.clientY };
     }
 
     function handleMouseLeave() {
@@ -116,18 +114,23 @@ export function ParticleNetwork() {
     initParticles();
     draw();
 
-    const parent = canvas.parentElement;
     window.addEventListener("resize", resize);
-    parent?.addEventListener("mousemove", handleMouseMove);
-    parent?.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       cancelAnimationFrame(animationFrame);
       window.removeEventListener("resize", resize);
-      parent?.removeEventListener("mousemove", handleMouseMove);
-      parent?.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 -z-10 h-full w-full"
+      aria-hidden
+    />
+  );
 }

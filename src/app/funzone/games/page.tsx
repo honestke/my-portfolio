@@ -16,7 +16,7 @@ const games = [
 
 export default function GamesPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
       <div className="mx-auto max-w-5xl px-6 pb-24 pt-32">
         <Link

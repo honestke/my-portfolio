@@ -56,7 +56,7 @@ export default async function ResearchPaperPage({
     : null;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
 
       <article className="mx-auto max-w-3xl px-6 pb-24 pt-32">

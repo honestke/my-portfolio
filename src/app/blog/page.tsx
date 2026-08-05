@@ -36,7 +36,7 @@ export default async function BlogIndexPage({
   const tags = Array.from(new Set((allPosts ?? []).flatMap((p) => p.tags ?? [])));
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="mx-auto max-w-5xl px-6 pb-24 pt-32">

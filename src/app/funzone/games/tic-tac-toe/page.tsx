@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function TicTacToePage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
       <div className="mx-auto max-w-3xl px-6 pb-24 pt-32">
         <Link

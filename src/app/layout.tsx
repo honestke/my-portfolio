@@ -4,6 +4,7 @@ import "./globals.css";
 import "highlight.js/styles/github-dark.css";
 import { PageviewTracker } from "@/components/PageviewTracker";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { GlobalBackground } from "@/components/GlobalBackground";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -53,6 +54,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <GlobalBackground />
           <PageviewTracker />
           {children}
         </ThemeProvider>

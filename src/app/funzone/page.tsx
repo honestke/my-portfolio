@@ -45,7 +45,7 @@ export default async function FunzonePage() {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navbar />
 
       <div className="mx-auto max-w-6xl px-6 pb-24 pt-32">
