@@ -75,7 +75,7 @@ export function Hero() {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             className="glass-panel flex h-32 w-32 items-center justify-center rounded-full border-emerald/40 text-3xl font-display font-semibold text-neutral-900 dark:text-white sm:h-36 sm:w-36 sm:mx-auto"
           >
-            HM
+            HC
           </motion.div>
         </motion.div>
 
@@ -85,7 +85,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
         >
           <h1 className="font-display text-4xl font-bold tracking-tight text-neutral-900 dark:text-white sm:text-6xl">
-            HONEST MBEHEZE
+            HONEST CO.
           </h1>
           <p className="mt-4 h-8 text-lg font-medium sm:text-2xl">
             <TypingRoles />

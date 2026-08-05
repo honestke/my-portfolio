@@ -41,7 +41,7 @@ export function Navbar() {
           }`}
         >
           <Link href="/" className="font-display text-sm font-semibold text-neutral-900 dark:text-white">
-            Honest<span className="text-emerald">.</span>
+            Honest Co<span className="text-emerald">.</span>
           </Link>
 
           <div className="hidden items-center gap-6 sm:flex">

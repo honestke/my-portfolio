@@ -24,18 +24,18 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Honest Mbeheze",
-    template: "%s | Honest Mbeheze",
+    default: "Honest Co.",
+    template: "%s | Honest Co.",
   },
   description: "Portfolio — Data Analyst & AI Integration Specialist",
   openGraph: {
-    title: "Honest Mbeheze",
+    title: "Honest Co.",
     description: "Portfolio — Data Analyst & AI Integration Specialist",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Honest Mbeheze",
+    title: "Honest Co.",
     description: "Portfolio — Data Analyst & AI Integration Specialist",
   },
 };

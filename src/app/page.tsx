@@ -19,7 +19,7 @@ export default async function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Honest Mbeheze",
+    name: "Honest Co.",
     jobTitle: "Full Stack Developer & AI Integration Specialist",
     email: "honestmbeheze@gmail.com",
     url: "/",
@@ -48,10 +48,10 @@ export default async function Home() {
 
       <footer className="border-t border-black/10 px-6 py-10 text-center dark:border-white/10">
         <p className="font-display text-sm font-semibold text-neutral-900 dark:text-white">
-          Honest<span className="text-emerald">.</span>
+          Honest Co<span className="text-emerald">.</span>
         </p>
         <p className="mt-2 text-xs text-neutral-500">
-          © {new Date().getFullYear()} Honest Mbeheze. Built with Next.js &amp; Supabase.
+          © {new Date().getFullYear()} Honest Co. Built with Next.js &amp; Supabase.
         </p>
         <Link
           href="/contact"
