@@ -27,16 +27,16 @@ export function Navbar() {
 
   return (
     <motion.header
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
       className="fixed inset-x-0 top-0 z-50 flex justify-center px-4"
     >
       <div className="mt-4 w-full max-w-3xl">
         <nav
           className={`flex items-center justify-between rounded-full px-5 transition-all duration-300 ${
             scrolled || menuOpen
-              ? "glass-panel py-2.5 shadow-lg shadow-black/30"
+              ? "border border-black/10 bg-white/95 py-2.5 shadow-lg shadow-black/10 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/95 dark:shadow-black/30"
               : "border border-transparent py-3.5"
           }`}
         >
@@ -77,14 +77,14 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="glass-panel mt-2 flex flex-col gap-1 rounded-2xl p-3 sm:hidden"
+              className="mt-2 flex flex-col gap-1 rounded-2xl border border-black/10 bg-white/95 p-3 shadow-lg shadow-black/10 backdrop-blur-xl dark:border-white/10 dark:bg-neutral-950/95 dark:shadow-black/30 sm:hidden"
             >
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-sm text-neutral-600 transition hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white"
+                  className="rounded-lg px-3 py-2.5 text-sm text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-white/5 dark:hover:text-white"
                 >
                   {link.label}
                 </Link>
